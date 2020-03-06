@@ -1,4 +1,4 @@
-# 프로그래머스 프린터 풀이
+# 프로그래머스 '프린터' 풀이
 
 ```java
 import java.util.List;
