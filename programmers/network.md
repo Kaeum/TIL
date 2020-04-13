@@ -1,5 +1,7 @@
 # 프로그래머스 '네트워크' 풀이
 
+* 문제 출처 : [프로그래머스 Lv3.네트워크](https://programmers.co.kr/learn/courses/30/lessons/43162)
+
 ```java
 import java.util.*;
 
@@ -38,16 +40,14 @@ class Graph {
     
     public int bfs() {
         int requiredNetworks = 0;
-        
         Queue<Integer> q = new LinkedList<Integer>();
+
         for(int i = 0; i < numberOfNodes; i++){
-            
             if(!visited[i]){
                 requiredNetworks++;
                 visited[i] = true;
                 q.add(i);
             }
-            
             while(!q.isEmpty()) {
                 int temp = q.poll();
                 for(int j = 0; j < adjList[temp].size(); j++){
@@ -73,22 +73,5 @@ class Graph {
 ```
 ***
 # Today-I-Learned
-* 정렬하고자 하는 클래스에 `Comparable` 인터페이스를 구현하고 `ArrayList`에 , `Collectins.sort`를 사용하였다.
-  * 처음에는 `PriortyQueue`를 사용하려했으나, Queue안의 모든 요소들을 (요소를 제거하지 않고) 순회하려고 하니 어려움이 있었다.
-  * 아래 반복문에서 보듯이, if문에 진입할 경우에만 해당 요소를 제거해야하는데, `poll()`을 쓰지 않고 `peek()`을 통해서 모든 요소를 순회하기는 쉽지 않다고 생각했다.
-  ```java
-    while(jobList.size() > 0){
-      for(int i = 0; i < jobList.size(); i++){
-          if(jobList.get(i).reqTime <= time){
-              time += jobList.get(i).prcTime;
-              answer += time - jobList.get(i).reqTime;
-              jobList.remove(i);
-              break;
-          }
-          if(i==jobList.size()-1){
-              time++;
-          }
-      }
-    }
-    ```
-    * `Queue`에도 `peekFirst()`, `peekLast()` 등의 메서드가 존재하나 (특정 요소를 poll/remove하지 않고) 모든 요소를 순회하는데에는 어려움이 있으며, `ArrayList`에 넣을 경우 index를 활용할 수 있어 훨씬 편리하였다.
+* 비연결 그래프를 전부 방문하는 데 몇 개의 네트워크(for-loop)가 필요한 지 구하는 방식으로 접근하였다.
+* 전형적인 연결 성분 개수를 구하는 문제로, DFS로도 풀이가 가능하다.
