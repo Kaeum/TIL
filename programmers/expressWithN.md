@@ -1,4 +1,4 @@
-# 프로그래머스 '네트워크' 풀이
+# 프로그래머스 'N으로 표현' 풀이
 
 * 문제 출처 : [프로그래머스 Lv3.N으로 표현](https://programmers.co.kr/learn/courses/30/lessons/42895)
 
