@@ -11,43 +11,43 @@
 	* RMI : 이미지를 삭제한다.
 	* STOP : 컨테이너를 중단시킨다. 
         
-![lifecycle](/Users/kaeum/Downloads/Untitled.png)
+
+![lifecycle](../images/docker1.png)
 
 ---
 
 * 이미지를 통해서 실제로 컨테이너의 데이터는 어디에 저장되는가?
 
-	* 먼저 도커 이미지의 저장소 위치를 확인해보자.
+  * 먼저 도커 이미지의 저장소 위치를 확인해보자.
 
-	
-	```bash
-sudo docker info
-sudo cd /var/lib/docker/overlay2
-	```
 
-	* 해당 디렉토리에는 아래와 같은 목록이 존재한다
+  ```bash
+  sudo docker info
+  sudo cd /var/lib/docker/overlay2
+  ```
 
-	```bash
-kaeum@docker-test:/var/lib/docker/overlay2# ls
-0cc29ea5605872d9c8291673064e85b07160203fbf04b34eeeed899731361960 # 레이어 변경 사항 저장
-615767e7221dbc99b8e441e35a88df5d74c911f2674ceaa28001388535e95be2 # 레이어 변경 사항 저장
-9f3bb671f38d7f61f661af369d420cdedb195e4d623bdb6ba8e3b045f72e8d69 # 레이어 변경 사항 저장
-l # 원본 레이어 저장
-```
+  * 해당 디렉토리에는 아래와 같은 목록이 존재한다
 
-	 * 컨테이너의 루트 디렉터리의 용량을 확인해보면 아래와 같다. 거의 대부분이 overlay2에 위치하는 것을 알 수 있다.
+  ```bash
+  kaeum@docker-test:/var/lib/docker/overlay2# ls
+  0cc29ea5605872d9c8291673064e85b07160203fbf04b34eeeed899731361960 # 레이어 변경 사항 저장
+  615767e7221dbc99b8e441e35a88df5d74c911f2674ceaa28001388535e95be2 # 레이어 변경 사항 저장
+  9f3bb671f38d7f61f661af369d420cdedb195e4d623bdb6ba8e3b045f72e8d69 # 레이어 변경 사항 저장
+  l # 원본 레이어 저장
+  ```
 
- ```bash
-du -sh /var/lib/docker/ #도커가 설치된 환경 용량 확인
-2.0G	/var/lib/docker/
-du -sh /var/lib/docker/image/ # 도커 이미지에 대한 정보 저장 디렉토리
-2.7M	/var/lib/docker/image/
-du -sh /var/lib/docker/overlay2/ # 도커 이미지의 파일 시스템이 사용되는 실제 디렉토리
-2.0G	/var/lib/docker/overlay2/
-du -sh /var/lib/docker/containers/ # 도커 컨테이너 정보 저장 디렉토리
-136K	/var/lib/docker/containers/ 
-```
-	
+  * 컨테이너의 루트 디렉터리의 용량을 확인해보면 아래와 같다. 거의 대부분이 overlay2에 위치하는 것을 알 수 있다.
+
+  ```bash
+  du -sh /var/lib/docker/ #도커가 설치된 환경 용량 확인
+  2.0G	/var/lib/docker/
+  du -sh /var/lib/docker/image/ # 도커 이미지에 대한 정보 저장 디렉토리
+  2.7M	/var/lib/docker/image/
+  du -sh /var/lib/docker/overlay2/ # 도커 이미지의 파일 시스템이 사용되는 실제 디렉토리
+  2.0G	/var/lib/docker/overlay2/
+  du -sh /var/lib/docker/containers/ # 도커 컨테이너 정보 저장 디렉토리
+  136K	/var/lib/docker/containers/
+
 ---
 
 * 알아둘만한 도커 명령어들!
