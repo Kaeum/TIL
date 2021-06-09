@@ -1,5 +1,11 @@
 # Kubernetes 101
 
+---
+
+## Kubernetes 소개
+
+---
+
 * 쿠버네티스의 전신 : 구글의 사내 프로젝트 경험을 바탕으로, 쿠버네티스를 오픈소스로 2014년 공개
 
   * Borg
@@ -45,3 +51,96 @@
     * Container Runtime(Pod)
 
   ![kube-architecture](../images/kubernetes1.png)
+
+---
+
+## Kubernetes 실습 on GCP
+
+---
+
+* Kubernetes 클러스터 만들기
+  * Region만 바꾸고 진행. 마스터 버전은 default 값
+* nginx 실행해보기(feat. Google Cloud Shell)
+
+```bash
+kubectl create deployment nginx --image=nginx
+kubectl expose deployment nginx --type=LoadBalancer
+```
+
+* Go를 활용해 앱 실행하기
+
+  * hostname을 확인할 수 있는 간단한 프로그램 작성
+
+  ```go
+  package main
+  
+  import (
+      "fmt"
+      "github.com/julienschmidt/httprouter"
+      "net/http"
+      "log"
+      "os"
+  )
+  
+  func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+      hostname, err := os.Hostname()
+      if err == nil {
+          fmt.Fprint(w, "Welcome! " + hostname +"\n")
+      } else {
+          fmt.Fprint(w, "Welcome! ERROR\n")
+      }
+  }
+  
+  func main() {
+      router := httprouter.New()
+      router.GET("/", Index)
+  
+      log.Fatal(http.ListenAndServe(":8080", router))
+  }
+  ```
+
+  * Go 언어 설치 및 앱 실행
+
+  ```bash
+  apt install golang
+  go get github.com/julienschmidt/httprouter
+  go build main.go
+  ./main
+  ```
+
+  * dockerfile 작성
+
+  ```dockerfile
+  FROM golang:1.11
+  WORKDIR /usr/src/app
+  COPY main /usr/src/app
+  CMD ["/usr/src/app/main"]
+  ```
+
+  * 도커 빌드/푸시
+
+  ```bash
+  sudo docker build -t oror1024/http-go
+  sudo docker login
+  sudo docker push oror1024/http-go
+  ```
+
+  * 컨테이너에 앱 배포
+
+  ```bash
+  sudo docker run -d -p 8080:8080 --rm http-go
+  ```
+
+  * 쿠버네티스에 배포
+
+  ```bash
+  kubectl create deployment http-go --image=oror1024/http-go
+  kubectl expose deployment http-go --name http-go-svc --type=LoadBalancer --port=8080
+  ```
+
+  
+
+  
+
+  
+
