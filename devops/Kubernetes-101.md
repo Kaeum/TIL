@@ -38,10 +38,10 @@
     * kube-apiserver
     * etcd
     * kube-scheduler
-    * controller-manager
+    *  controller-manager
   * Worker Node
     * kubelet
     * kube-proxy
     * Container Runtime(Pod)
 
-  ![kube-architecture](D:\TIL\images\kubernetes1.png)
+  ![kube-architecture](../images/kubernetes1.png)
